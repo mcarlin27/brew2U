@@ -4,11 +4,11 @@ var apiKey = require('./../.env').apiKey;
 function User() {
 }
 
-User.prototype.getBeer = function(location) {
+User.prototype.getBeer = function(location, displayBreweries) {
 
   $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&postalCode=' + location)
-    .then(function(resp) {
-      console.log(resp);
+    .then(function(response) {
+      displayBreweries(response.main.name)
     });
 };
 
