@@ -1,0 +1,17 @@
+{
+  "name": "brew2u",
+  "description": "A program that allows users to find breweries based on location.",
+  "main": "index.js",
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}

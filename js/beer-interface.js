@@ -6,6 +6,6 @@ $(document).ready(function() {
     var currentUserObject = new User();
     var location = $("#location").val();
     var radius = $("#radius").val();
-    currentUserObject.getBeer(location, radius, displayBreweries);
+    currentUserObject.getBeer(location);
   });
 });

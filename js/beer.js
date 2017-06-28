@@ -1,14 +1,15 @@
-var apiKey= require "90ac80c1a898af38e37a0a8ab7c195ca"
-
+var apiKey = require('./../.env').apiKey;
 
 
 function User() {
-  // this.location = location;
-  // this.radius = radius;
 }
 
-User.prototype.getBeer = function(location, radius, displayBreweries){
+User.prototype.getBeer = function(location) {
 
-}
+  $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&postalCode=' + location)
+    .then(function(resp) {
+      console.log(resp);
+    });
+};
 
 exports.userModule = User;
