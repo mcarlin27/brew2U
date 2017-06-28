@@ -10,3 +10,5 @@ function User() {
 User.prototype.getBeer = function(location, radius, displayBreweries){
 
 }
+
+exports.userModule = User;

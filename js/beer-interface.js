@@ -1,3 +1,5 @@
+var User = require('./../js/beer.js').userModule;
+
 $(document).ready(function() {
   $("#user-form").submit(function(event) {
     event.preventDefault();
