@@ -5,10 +5,12 @@ function User() {
 }
 
 User.prototype.getBeer = function(location, displayBreweries) {
-
   $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&postalCode=' + location)
     .then(function(response) {
-      displayBreweries(response.main.name)
+
+      response.data.forEach(function(element) {
+        displayBreweries(element.name + ", ")
+      });
     });
 };
 
