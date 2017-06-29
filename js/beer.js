@@ -35,6 +35,7 @@ var locationArray = [];
 
 User.prototype.getBeerWithZip = function(location, displayBreweries) {
   locationArray = location.split("-");
+  var currentUser = this;
   $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&postalCode=' + locationArray[0])
     .then(function(response) {
       response.data.forEach(function(element) {
@@ -67,12 +68,13 @@ User.prototype.getBeerWithZip = function(location, displayBreweries) {
       lngLatArray.push(newLngLat);
     });
     displayBreweries(breweryArray);
+    currentUser.dropPin(location, lngLatArray);
   });
-    return lngLatArray;
 };
 
 User.prototype.getBeerWithCity = function(location, displayBreweries) {
   locationArray = location.split(", ");
+  var currentUser = this;
   $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&locality=' + locationArray[0] + '&region=' + stateHash[locationArray[1]])
     .then(function(response) {
       response.data.forEach(function(element) {
@@ -105,23 +107,19 @@ User.prototype.getBeerWithCity = function(location, displayBreweries) {
         lngLatArray.push(newLngLat);
       });
       displayBreweries(breweryArray);
+      currentUser.dropPin(location, lngLatArray);
     });
-    return lngLatArray;
   };
 
 User.prototype.dropPin = function(location, lngLatArray) {
   lngLatArray.forEach(function(lngLat) {
-    var position = new google.maps.LatLng(parseFloat(lngLat.latitude), parseFloat(lngLat.longitude));
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: location,
-      mapTypeId: "terrain"
-    });
-    return map;
+    var position = new google.maps.LatLng(lngLat.lat, lngLat.lng);
+    console.log(position);
     var marker = new google.maps.Marker({
-      map: map,
+      setMap: map,
       position: position
     });
+    return map;
   });
 };
 

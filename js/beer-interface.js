@@ -18,13 +18,11 @@ $(document).ready(function() {
 
     var currentUserObject = new User();
     var location = $("#location").val();
-    var lngLatArray;
     if (isNaN(parseFloat(location))) {
-      lngLatArray = currentUserObject.getBeerWithCity(location, displayBreweries);
+      currentUserObject.getBeerWithCity(location, displayBreweries);
     } else {
-      lngLatArray = currentUserObject.getBeerWithZip(location, displayBreweries);
+      currentUserObject.getBeerWithZip(location, displayBreweries);
     }
-    currentUserObject.dropPin(location, lngLatArray);
     // var radius = $("#radius").val();
     // console.log(location);
     // console.log(currentUserObject);
