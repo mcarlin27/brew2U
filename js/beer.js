@@ -1,6 +1,4 @@
 var apiKey = require('./../.env').apiKey;
-var mapApiKey = require('./../.env').mapApiKey;
-var map;
 
 function User() {
 }
@@ -10,48 +8,36 @@ function LngLat(lng, lat) {
   this.lat = lat;
 }
 
-
-function initMap(lat, lng) {
-  var userInput = {
-    lat: lat,
-    lng: lng
-  };
-
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: userInput
-  });
-}
-
-
 var lngLatArray = [];
+var locationArray = [];
 
-User.prototype.getBeer = function(location, displayBreweries) {
+User.prototype.getBeerWithZip = function(location, displayBreweries) {
   $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&postalCode=' + location)
     .then(function(response) {
 
       response.data.forEach(function(element) {
-        displayBreweries(element.name + ", ");
-        var newLngLat = new LngLat(element.longitude, element.latitude);
+        displayBreweries('<li>' + element.name + '<br>' + element.streetAddress + '<br>' + element.phone + '<br>' + element.website + '</li>');
+        var newLngLat = new LngLat(parseFloat(element.longitude), parseFloat(element.latitude));
         lngLatArray.push(newLngLat);
       });
     });
-    console.log(lngLatArray);
+    return lngLatArray;
   };
 
-
-LngLat.prototype.dropPin = function(lngLatArray, location) {
-  $.get('https://maps.googleapis.com/maps/api/js?key=' + mapApiKey)
+User.prototype.getBeerWithCity = function(location, displayBreweries) {
+  locationArray = location.split(", ");
+  console.log(location);
+  $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&locality=' + locationArray[0] + '&region=' + locationArray[1])
     .then(function(response) {
       console.log(response);
-      lngLatArray.forEach(function(lngLat) {
-        var position = new google.maps.LatLng(lngLat.latitude, lngLat.longitude);
-        new google.maps.Marker({
-          map: map,
-          position: position
-        });
+      response.data.forEach(function(element) {
+        displayBreweries('<li>' + element.name + '<br>' + element.streetAddress + '<br>' + element.phone + '<br>' + element.website + '</li>');
+        // var newLngLat = new LngLat(parseFloat(element.longitude), parseFloat(element.latitude));
+        // lngLatArray.push(newLngLat);
       });
     });
+    // return lngLatArray;
   };
+
 
 exports.userModule = User;
