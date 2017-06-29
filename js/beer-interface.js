@@ -1,5 +1,5 @@
 var User = require('./../js/beer.js').userModule;
-// var initMap = require('./../js/beer.js').initMapModule;
+var initMap = require('./../js/beer.js').initMapModule;
 
 
 var displayBreweries = function(array) {
@@ -9,7 +9,7 @@ var displayBreweries = function(array) {
 };
 
 $(document).ready(function() {
-  // initMap();
+  initMap();
   $("#user-form").submit(function(event) {
     event.preventDefault();
     $(".showBreweries").empty();
@@ -18,11 +18,13 @@ $(document).ready(function() {
 
     var currentUserObject = new User();
     var location = $("#location").val();
+    var lngLatArray;
     if (isNaN(parseFloat(location))) {
-      currentUserObject.getBeerWithCity(location, displayBreweries);
+      lngLatArray = currentUserObject.getBeerWithCity(location, displayBreweries);
     } else {
-      currentUserObject.getBeerWithZip(location, displayBreweries);
+      lngLatArray = currentUserObject.getBeerWithZip(location, displayBreweries);
     }
+    currentUserObject.dropPin(location, lngLatArray);
     // var radius = $("#radius").val();
     // console.log(location);
     // console.log(currentUserObject);
