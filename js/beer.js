@@ -21,7 +21,8 @@ var lngLatArray = [];
 var locationArray = [];
 
 User.prototype.getBeerWithZip = function(location, displayBreweries) {
-  $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&postalCode=' + location)
+  locationArray = location.split("-");
+  $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&postalCode=' + locationArray[0])
     .then(function(response) {
       response.data.forEach(function(element) {
         var newBrewery = new Brewery(element.name, element.streetAddress, element.phone, element.website, element.hoursOfOperation);
@@ -57,7 +58,6 @@ User.prototype.getBeerWithZip = function(location, displayBreweries) {
 
 User.prototype.getBeerWithCity = function(location, displayBreweries) {
   locationArray = location.split(", ");
-  console.log(location);
   $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&locality=' + locationArray[0] + '&region=' + locationArray[1])
     .then(function(response) {
       response.data.forEach(function(element) {
