@@ -2,8 +2,10 @@ var User = require('./../js/beer.js').userModule;
 // var initMap = require('./../js/beer.js').initMapModule;
 
 
-var displayBreweries = function(breweryData) {
-  $('.showBreweries').append(breweryData);
+var displayBreweries = function(array) {
+  array.forEach(function(data) {
+    $(".showBreweries").append('<li>' + data.name + '<br>' + data.streetAddress + '<br>' + data.phone + '<br>' + data.website +  '<br>' + data.hoursOfOperation + '</li>');
+  });
 };
 
 $(document).ready(function() {

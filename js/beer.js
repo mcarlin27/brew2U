@@ -1,4 +1,5 @@
 var apiKey = require('./../.env').apiKey;
+var stateHash = require('./../state_hash.json');
 
 function User() {
 }
@@ -49,16 +50,16 @@ User.prototype.getBeerWithZip = function(location, displayBreweries) {
           } else {
             brewery.hoursOfOperation = "Website: N/A";
           }
-          displayBreweries('<li>' + brewery.name + '<br>' + brewery.streetAddress + '<br>' + brewery.phone + '<br>' + brewery.website +  '<br>' + brewery.hoursOfOperation + '</li>');
         });
     });
+    displayBreweries(breweryArray);
   });
     // return lngLatArray;
 };
 
 User.prototype.getBeerWithCity = function(location, displayBreweries) {
   locationArray = location.split(", ");
-  $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&locality=' + locationArray[0] + '&region=' + locationArray[1])
+  $.get('http://api.brewerydb.com/v2/locations?key=' + apiKey + '&locality=' + locationArray[0] + '&region=' + stateHash[locationArray[1]])
     .then(function(response) {
       response.data.forEach(function(element) {
         var newBrewery = new Brewery(element.name, element.streetAddress, element.phone, element.website, element.hoursOfOperation);
@@ -85,11 +86,11 @@ User.prototype.getBeerWithCity = function(location, displayBreweries) {
           } else {
             brewery.hoursOfOperation = "Website: N/A";
           }
-          displayBreweries('<li>' + brewery.name + '<br>' + brewery.streetAddress + '<br>' + brewery.phone + '<br>' + brewery.website +  '<br>' + brewery.hoursOfOperation + '</li>');
         });
         // var newLngLat = new LngLat(parseFloat(element.longitude), parseFloat(element.latitude));
         // lngLatArray.push(newLngLat);
       });
+      displayBreweries(breweryArray);
     });
     // return lngLatArray;
   };
