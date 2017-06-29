@@ -43,12 +43,12 @@ User.prototype.getBeerWithZip = function(location, displayBreweries) {
           if (brewery.website != undefined) {
             brewery.website = brewery.website;
           } else {
-            brewery.website = "Hours of Operation: N/A";
+            brewery.website = "Website: N/A";
           }
           if (brewery.hoursOfOperation != undefined) {
             brewery.hoursOfOperation = brewery.hoursOfOperation;
           } else {
-            brewery.hoursOfOperation = "Website: N/A";
+            brewery.hoursOfOperation = "Hours of Operation: N/A";
           }
         });
     });
@@ -79,12 +79,12 @@ User.prototype.getBeerWithCity = function(location, displayBreweries) {
           if (brewery.website != undefined) {
             brewery.website = brewery.website;
           } else {
-            brewery.website = "Hours of Operation: N/A";
+            brewery.website = "Website: N/A";
           }
           if (brewery.hoursOfOperation != undefined) {
             brewery.hoursOfOperation = brewery.hoursOfOperation;
           } else {
-            brewery.hoursOfOperation = "Website: N/A";
+            brewery.hoursOfOperation = "Hours of Operation: N/A";
           }
         });
         // var newLngLat = new LngLat(parseFloat(element.longitude), parseFloat(element.latitude));
