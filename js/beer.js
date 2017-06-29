@@ -16,7 +16,7 @@ User.prototype.getBeerWithZip = function(location, displayBreweries) {
     .then(function(response) {
 
       response.data.forEach(function(element) {
-        displayBreweries('<li>' + element.name + '<br>' + element.streetAddress + '<br>' + element.phone + '<br>' + element.website + '</li>');
+        displayBreweries('<li>' + element.name + '<br>' + element.streetAddress + '<br>' + element.phone + '<br>' + element.website + '<br>' + element.hoursOfOperation + '</li>');
         var newLngLat = new LngLat(parseFloat(element.longitude), parseFloat(element.latitude));
         lngLatArray.push(newLngLat);
       });
@@ -31,7 +31,17 @@ User.prototype.getBeerWithCity = function(location, displayBreweries) {
     .then(function(response) {
       console.log(response);
       response.data.forEach(function(element) {
-        displayBreweries('<li>' + element.name + '<br>' + element.streetAddress + '<br>' + element.phone + '<br>' + element.website + '</li>');
+        element.forEach(function(item) {
+          if (element.item !== undefined) {
+            return element.item;
+          } else {
+            return "No information available";
+          }
+        }); //THIS DOESN'T WORK
+        //WHAT ABOUT ZIPS WITH HYPHENS
+        //WHAT ABOUT NON-STANDARD ADDRESSES? WHAT ABOUT STATE ABBREVS?
+
+        displayBreweries('<li>' + element.name + '<br>' + element.streetAddress + '<br>' + element.phone + '<br>' + element.website +  '<br>' + element.hoursOfOperation + '</li>');
         // var newLngLat = new LngLat(parseFloat(element.longitude), parseFloat(element.latitude));
         // lngLatArray.push(newLngLat);
       });
